@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
-
-enum ThemeModeType { light, dark }
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeModel extends ChangeNotifier {
-  ThemeModeType _themeMode = ThemeModeType.dark;
+  bool _isDarkMode = false;
 
-  ThemeModeType get themeMode => _themeMode;
+  ThemeModel() {
+    _loadThemeMode();
+  }
 
-  void toggleTheme() {
-    _themeMode = _themeMode == ThemeModeType.light
-        ? ThemeModeType.dark
-        : ThemeModeType.light;
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleTheme() async {
+    _isDarkMode = _isDarkMode == false ? true : false;
     notifyListeners();
+
+    // Lưu chế độ hiển thị vào shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', isDarkMode);
+  }
+
+  void _loadThemeMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? savedThemeMode = prefs.getBool('isDarkMode');
+    print(">>>> $savedThemeMode");
+    if (savedThemeMode != null) {
+      _isDarkMode = savedThemeMode;
+      notifyListeners();
+    }
   }
 }

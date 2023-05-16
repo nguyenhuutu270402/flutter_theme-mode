@@ -12,7 +12,7 @@ class DetailPgae extends StatelessWidget {
         builder: (context, themeModel, _) => ElevatedButton(
           onPressed: () => themeModel.toggleTheme(),
           child: Text(
-            themeModel.themeMode == ThemeModeType.light
+            themeModel.isDarkMode == false
                 ? 'Switch to Dark Mode'
                 : 'Switch to Light Mode',
           ),

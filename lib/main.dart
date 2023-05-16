@@ -19,10 +19,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Dark Mode',
       theme: ThemeData.light(), // Chế độ Light Mode
       darkTheme: ThemeData.dark(), // Chế độ Dark Mode
-      themeMode:
-          Provider.of<ThemeModel>(context).themeMode == ThemeModeType.light
-              ? ThemeMode.light
-              : ThemeMode.dark,
+      themeMode: Provider.of<ThemeModel>(context).isDarkMode == false
+          ? ThemeMode.light
+          : ThemeMode.dark,
       home: HomePage(),
     );
   }
