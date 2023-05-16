@@ -13,14 +13,16 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Consumer<ThemeModel>(
-            builder: (context, themeModel, _) => ElevatedButton(
-              onPressed: () => themeModel.toggleTheme(),
-              child: Text(
-                themeModel.isDarkMode == false
-                    ? 'Switch to Dark Mode'
-                    : 'Switch to Light Mode',
-              ),
-            ),
+            builder: (context, themeModel, _) {
+              return ElevatedButton(
+                onPressed: () => themeModel.toggleTheme(),
+                child: Text(
+                  themeModel.isDarkMode == false
+                      ? 'Switch to Dark Mode'
+                      : 'Switch to Light Mode',
+                ),
+              );
+            },
           ),
           ElevatedButton(
             onPressed: () {
@@ -29,6 +31,19 @@ class HomePage extends StatelessWidget {
               ));
             },
             child: Text("Page Detail"),
+          ),
+          Consumer<ThemeModel>(
+            builder: (context, themeModel, _) {
+              return Transform.scale(
+                scale: 2.5,
+                child: Switch(
+                  value: themeModel.isDarkMode,
+                  onChanged: (value) {
+                    themeModel.toggleTheme();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
